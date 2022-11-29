@@ -1,5 +1,6 @@
 package com.example.exam_library.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -63,5 +64,39 @@ public class BooksDBHelper extends SQLiteOpenHelper {
         book.setYear(cursor.getInt(5));
         book.setPages(cursor.getInt(6));
         return book;
+    }
+
+    public void databaseDelete(long id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete(BooksDBHelper.TABLE, BooksDBHelper.COLUMN_ID + "= ?;",
+                new String[]{String.valueOf(id)});
+    }
+
+    public void databaseUpdate(Book book, long id) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BooksDBHelper.COLUMN_AUTHOR, book.getAuthor());
+        contentValues.put(BooksDBHelper.COLUMN_TITLE, book.getTitle());
+        contentValues.put(BooksDBHelper.COLUMN_GENRE, book.getGenre());
+        contentValues.put(BooksDBHelper.COLUMN_PUBLISHER, book.getPublishingHouse());
+        contentValues.put(BooksDBHelper.COLUMN_YEAR, book.getYear());
+        contentValues.put(BooksDBHelper.COLUMN_PAGES, book.getPages());
+        //save changes
+        database.update(BooksDBHelper.TABLE, contentValues,
+                BooksDBHelper.COLUMN_ID + " = " + String.valueOf(id) + ";", null);
+    }
+
+    public void saveNewBook(Book book) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(BooksDBHelper.COLUMN_AUTHOR, book.getAuthor());
+        contentValues.put(BooksDBHelper.COLUMN_TITLE, book.getTitle());
+        contentValues.put(BooksDBHelper.COLUMN_GENRE, book.getGenre());
+        contentValues.put(BooksDBHelper.COLUMN_PUBLISHER, book.getPublishingHouse());
+        contentValues.put(BooksDBHelper.COLUMN_YEAR, book.getYear());
+        contentValues.put(BooksDBHelper.COLUMN_PAGES, book.getPages());
+        //save to dataBase new item (book)
+        database.insert(BooksDBHelper.TABLE, null, contentValues);
+        database.close();
     }
 }

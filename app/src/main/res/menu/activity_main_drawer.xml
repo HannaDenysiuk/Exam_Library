@@ -6,11 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="?attr/homeAsUpIndicator"
             android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_add_edit"
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Add new book" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="?attr/actionModeCopyDrawable"
             android:title="@string/menu_gallery" />
     </group>
 </menu>
